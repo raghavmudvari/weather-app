@@ -2,10 +2,32 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp/additionalinfo.dart';
-
+import 'package:http/http.dart' as http;
+import 'package:weatherapp/secret.dart';
 import 'hourlyForecast.dart';
 
-class WeatherScreen extends StatelessWidget {
+class WeatherScreen extends StatefulWidget {
+  const WeatherScreen({super.key});
+
+  @override
+  State<WeatherScreen> createState() => _WeatherScreenState();
+}
+
+class _WeatherScreenState extends State<WeatherScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getCurrentWeather();
+  }
+  Future getCurrentWeather() async{
+    String cityName='london';
+    final res=await http.get(
+      Uri.parse('https://api.openweathermap.org/data/2.5/weather?q=$cityName&APPID=$openWeatherAPIkey'),
+    );
+    print(res.body);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,11 +110,11 @@ class WeatherScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  HourlyForecastItem(),
-                  HourlyForecastItem(),
-                  HourlyForecastItem(),
-                  HourlyForecastItem(),
-                  HourlyForecastItem(),
+                  HourlyForecastItem(time: '3:00',icon: Icons.cloud,temperature: '32.5 degree',),
+                  HourlyForecastItem(time: '4:00',icon: Icons.cloud,temperature: '30 degree',),
+                  HourlyForecastItem(time: '5:00',icon: Icons.water_drop,temperature: '27 degree',),
+                  HourlyForecastItem(time: '6:00',icon: Icons.cloudy_snowing,temperature: '25 degree',),
+                  HourlyForecastItem(time: '7:00',icon: Icons.shield_moon_rounded,temperature: '24 degree',),
                 ],
               ),
             ),
