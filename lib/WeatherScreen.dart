@@ -1,6 +1,9 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:weatherapp/additionalinfo.dart';
+
+import 'hourlyForecast.dart';
 
 class WeatherScreen extends StatelessWidget {
   @override
@@ -76,17 +79,45 @@ class WeatherScreen extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: const Text('Weather Forecast',style:
-                TextStyle(fontSize: 24),),
+                TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+              ),
+
             ),
-            const Placeholder(
-              fallbackHeight: 150,
+            const SizedBox(height: 15,),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  HourlyForecastItem(),
+                  HourlyForecastItem(),
+                  HourlyForecastItem(),
+                  HourlyForecastItem(),
+                  HourlyForecastItem(),
+                ],
+              ),
             ),
+
             const SizedBox(
               height: 20,
             ),
             //additional information
-            const Placeholder(
-              fallbackHeight: 100,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: const Text('Additional Information',style:
+              TextStyle(fontSize: 24,fontWeight: FontWeight.bold),
+              ),
+
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                additionalInfo(icon: Icons.water_drop,label: 'Humidity',value: '76',),
+                additionalInfo(icon: Icons.wind_power,label: 'Wind Speed',value: '14 km/h'),
+                additionalInfo(icon: Icons.monitor_weight,label: 'Air Pressure',value: '1002'),
+              ],
             )
           ],
         ),
